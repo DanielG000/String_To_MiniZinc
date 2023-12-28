@@ -107,4 +107,115 @@ class app:
         return minizinc
 
 
+    #esta funcion busca la combinacion que maximice la funcion objetivo
+    def calcular(self):
+        self.variables = []
+        z = 0
+        for n in self.rangeP:
+            self.variables.append(0)
+        self.inicioVariables()
+        resultado = self.variar()
+        show = ""
+        for n in self.rangeP:
+            show += F" {self.productos[n][0]}: {resultado[n]},"
+        show += F" Ganancias: {self.funcionZ()}"
+        return show
+
+    def inicioVariables(self):
+        for n in self.rangeP:
+            mayorMateria = -1
+            cantidad = 0
+            for m in self.rangeM:
+                cantNueva = int(self.productos[n][2+m])
+                if cantidad <= cantNueva:
+                    mayorMateria = m
+                    cantidad = cantNueva
+
+            #ponemos de valir inicial de cada variable el mayor maximo que se puede hacer con la restricción de materia prima. para que vaya reduciendo y buscando la mejor combinación
+            inicial = math.ceil(int(self.materias[mayorMateria][2]) / cantidad) - 1
+            self.variables[n] = inicial
+            self.mejorCombinacion = self.variables.copy()
+        pass
+
+    def reinicioVariables(self):
+        for n in self.rangeP:
+            mayorMateria = -1
+            cantidad = 0
+            for m in self.rangeM:
+                cantNueva = int(self.productos[n][2+m])
+                if cantidad <= cantNueva:
+                    mayorMateria = m
+                    cantidad = cantNueva
+
+            #ponemos de valir inicial de cada variable el mayor maximo que se puede hacer con la restricción de materia prima. para que vaya reduciendo y buscando la mejor combinación
+            inicial = math.ceil(int(self.materias[mayorMateria][2]) / cantidad) - 1
+            self.variables[n] = inicial
+        pass
+
+    def cumplePrimaDisponible(self):
+        condicion = False
+        for m in self.rangeM:
+            r = int(self.materias[m][2])
+            v = 0
+            for n in self.rangeP:
+                v += self.variables[n] * int(self.productos[n][2+m])
+            if v <= r and v >= 0:
+                condicion = True
+            elif v > r or v < 0:
+                condicion = False
+
+        return condicion
+
+    def cumpleAllZero(self):
+        condicion = True
+        valorT = 0
+        for n in self.rangeP:
+            valor = self.variables[n]
+            valorT += valor
+            if valor < 0 and valorT >=0:
+                self.variables[n] = 0
+                condicion = False
+            elif valor > 0:
+                condicion = False
+        return condicion
+
+    def cumpleNoNegatividad(self):
+        condicion = True
+        for n in self.rangeP:
+            valor = self.variables[n]
+            if valor < 0:
+                condicion = False
+                break
+        return condicion
+
+    def funcionZ(self):
+        z = 0
+        for n in self.rangeP:
+            z += self.variables[n] * self.ganancias[n]
+        return z
+
+    def variar(self):
+        self.zOptimo = 0
+        for x in self.rangeP:
+            self.reinicioVariables()
+            #while((self.cumpleNoNegatividad() and not self.cumpleAllZero()) or (self.cumplePrimaDisponible() and not self.cumpleAllZero)):
+            while(True):
+                n = random.randint(0,(len(self.variables)-1))
+
+                z = self.funcionZ()
+                if z >= self.zOptimo and self.cumpleNoNegatividad() and self.cumplePrimaDisponible():
+                    self.zOptimo = z
+                    self.mejorCombinacion = self.variables.copy()
+                self.variables[n] -= 1
+                if (self.cumpleAllZero()):
+                    break
+                
+            if z >= self.zOptimo and self.cumpleNoNegatividad() and self.cumplePrimaDisponible():
+                self.zOptimo = z
+                self.mejorCombinacion = self.variables.copy()
+            if (self.cumpleAllZero()):
+                break
+        return self.mejorCombinacion
+    pass
+
 app()
