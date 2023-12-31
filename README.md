@@ -18,11 +18,11 @@ Las tuplas de las segunda contiene el nombre de la materia, el costo, y la canti
 
 ### Ejemplo
 
-> 3
-> 3
-> Empanada 2000 2 1 3
-> Rellena 5000 3 9 9
-> Marranita 3000 2 0 4
-> Materia_prima_1 100 305
-> Materia_prima_2 250 405
-> Materia_prima_3 400 525
+> + 3
+> + 3
+> + Empanada 2000 2 1 3
+> + Rellena 5000 3 9 9
+> + Marranita 3000 2 0 4
+> + Materia_prima_1 100 305
+> + Materia_prima_2 250 405
+> + Materia_prima_3 400 525
