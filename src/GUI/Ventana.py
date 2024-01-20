@@ -9,7 +9,7 @@ class Ventana(customtkinter.CTk):
     def __init__(self, main):
         super().__init__()
         self.__manager = main
-        self.title("Optimización")
+        self.title("String To MiniZinc")
         self.geometry("900x600")
         self.create_widgets()
         pass
@@ -17,12 +17,12 @@ class Ventana(customtkinter.CTk):
     def create_widgets(self):
         #creación de cada componente
         self.__frame = CTkFrame(self)
-        self.__label = CTkLabel(self.__frame, text="String(Tables) to MiniZinc\n")
+        self.__label = CTkLabel(self.__frame, text="String to MiniZinc - Optimización\n")
         self.__labelIn = CTkLabel(self.__frame, text="Input:")
         self.__labelOut = CTkLabel(self.__frame, text="Output Minizinc:")
         self.__input = CTkTextbox(self.__frame)
         self.__output = CTkTextbox(self.__frame)
-        self.__resolver = CTkButton(self.__frame, text="Resolver", command=self.solucionar)
+        self.__resolver = CTkButton(self.__frame, text="Convertir", command=self.solucionar)
 
         
         #Mostrar en el frame

@@ -1,6 +1,4 @@
 from GUI.Ventana import Ventana
-import math
-import random
 
 class app:
 
@@ -10,20 +8,20 @@ class app:
 
     #Constructor
     def __init__(self):
-        self.__ventana = Ventana(self)
         self.startGUI()
         pass
 
     #Inicio de la aplicación gráfica
     def startGUI(self):
+        self.__ventana = Ventana(self)
         self.__ventana.mainloop()
         pass
 
     #Funcion de ejecución general
-    def solucionar(self, quien, input):
+    def solucionar(self, frameSolicitante, input):
 
         miniZinc = self.toMiniZinc(input)
-        quien.mostrarMiniZinc(miniZinc)
+        frameSolicitante.mostrarMiniZinc(miniZinc)
 
         pass
 
@@ -96,15 +94,6 @@ class app:
 
         minizinc = variables + noNegativo + restricciones + funcion + show
 
-        self.nProductos = nProductos
-        self.mMaterias = mMaterias
-        self.rangeP = range(nProductos)
-        self.rangeM = range(mMaterias)
-        self.productos = productos
-        self.materias = materias
-        self.ganancias = ganancias
-
         return minizinc
-
 
 app()
