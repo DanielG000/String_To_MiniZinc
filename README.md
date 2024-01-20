@@ -26,3 +26,11 @@ Las tuplas de las segunda contiene el nombre de la materia, el costo, y la canti
 > + Materia_prima_1 100 305
 > + Materia_prima_2 250 405
 > + Materia_prima_3 400 525
+
+## Lenguajes
+
++ Python
+
+### Librerias
+
++ Customtkinter
